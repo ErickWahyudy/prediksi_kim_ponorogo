@@ -1,7 +1,24 @@
 <?php $this->load->view('template/header'); ?>
 
 <?php if($this->session->userdata('level') == "1"){ ?>
-    <!DOCTYPE html>
+    <?php
+    // Isi kode lain yang diperlukan sebelumnya
+
+    // Mengumpulkan total nilai untuk setiap data
+    $totals = [];
+    foreach ($all_calculations as $index => $calculation) {
+        $totalNilai = 0;
+        for ($i = 0; $i < count($criteria); $i++) {
+            $totalNilai += (array_sum($calculation['nilaiEigen'][$i]) / count($criteria)) * $calculation['nilaiEigen'][$i][$index];
+        }
+        $totals[$index] = $totalNilai;
+    }
+
+    // Mengurutkan array $all_calculations berdasarkan total nilai
+    array_multisort($totals, SORT_DESC, $all_calculations);
+
+    ?>
+
     <h1><?php echo $judul; ?></h1>
 
     <div class="table-responsive">
@@ -13,6 +30,7 @@
             <th>Matriks Perbandingan</th>
             <th>Nilai Eigen</th>
             <th>Nilai CI dan CR</th>
+            <th>Total Nilai</th>
         </tr>
         </thead>
         <tbody>
@@ -28,11 +46,10 @@
                         <th><?php echo $criterion; ?></th>
                         <?php } ?>
                     </tr>
-                        <?php foreach ($calculation['matriksPerbandingan'] as $row) { ?>
+                        <?php foreach ($calculation['matriksPerbandingan'] as $index1 => $row) { ?>
                             <tr>
-                                <!-- view teks K1 K2 K3 K4 masih error -->
                             <th>
-                                <!-- <?php echo $criteria[$index]; ?> -->
+                                <?php echo $criteria[$index1]; ?>
                             </th>
                                 <?php foreach ($row as $value){ ?>
                                     <td><?php echo $value; ?></td>
@@ -57,11 +74,10 @@
                             <?php endforeach; ?>
                             <th>Jumlah</th>
                         </tr>
-                        <?php foreach ($calculation['nilaiEigen'] as $row): ?>
+                        <?php foreach ($calculation['nilaiEigen'] as $index1 => $row): ?>
                             <tr>
-                                <!-- view teks K1 K2 K3 K4 masih error -->
                             <th style="height: 30px; width: 30px;">
-                                <!-- <?php echo $criteria[$index]; ?> -->
+                                <?php echo $criteria[$index1]; ?>
                             </th>
                                 <?php foreach ($row as $value): ?>
                                     <td><?php echo number_format($value, 6); ?></td>
@@ -120,6 +136,24 @@
                         <tr>
                             <td>Konsistensi</td>
                             <td><?php echo $consistency; ?></td>
+                        </tr>
+                    </table>
+                </td>
+                <!-- Total Nilai berdasarkan rata-rata -->
+                <td>
+                    <table class="">
+                        <tr>                        
+                            <?php
+                                //total nilai berdasarkan rata-rata = (rata-rata K1 x rata-rata K1 KIM1+(rata-rata K2 x rata-rata K2 KIM1)+(rata-rata K3 x rata-rata K3 KIM1)+(rata-rata K4 x ratarata K4 KIM1)
+                                $totalNilai = 0;
+                                for ($i=0; $i < count($criteria); $i++) { 
+                                    $totalNilai += (array_sum($calculation['nilaiEigen'][$i]) / count($criteria)) * $calculation['nilaiEigen'][$i][$index];
+                                }
+                            ?>
+
+                            
+                                <td><?php echo number_format($totalNilai, 5); ?></td>
+                            
                         </tr>
                     </table>
                 </td>

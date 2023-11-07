@@ -232,7 +232,7 @@ if($this->session->userdata('level') =="1"){
                   <li><a href="<?= base_url('superadmin/perhitungan/ahp/nilai_asli') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Asli</span></a></li>  
                   <!-- <li><a href="<?= base_url('superadmin/perhitungan/ahp/hitungBobotAHP') ?>"><i class="fa fa-circle-o"></i> <span>Hitung Bobot</span></a></li> -->
                   <li><a href="<?= base_url('superadmin/perhitungan/nilai_perbandingan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perbandingan</span></a></li>
-                  <!-- <li><a href="<?= base_url('superadmin/perhitungan/hasil') ?>"><i class="fa fa-circle-o"></i> <span>Hasil Perhitungan</span></a></li>               -->
+                  <li><a href="<?= base_url('superadmin/perhitungan/hasil') ?>"><i class="fa fa-circle-o"></i> <span>Hasil Perhitungan</span></a></li>              
               </li>
           </ul>
        <!-- <li><a href="<?= base_url('superadmin/kriteria/lihat') ?>"><i class="fa fa-houzz"></i> <span>Data Kriteria</span></a></li> -->

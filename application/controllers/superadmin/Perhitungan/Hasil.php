@@ -1,4 +1,13 @@
 <?php
+/**
+ * PHP for Codeigniter
+ *
+ * @package        	CodeIgniter
+ * @pengembang		Kassandra Production (https://kassandra.my.id)
+ * @Author			@erikwahyudy
+ * @version			3.0
+ */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -28,208 +37,79 @@ class Hasil extends CI_controller
 
     //Lihat Data
     public function index()
-    {
-        $data['judul'] = 'Perhitungan Perbandingan';
-        $data['criteria'] = ['K1', 'K2', 'K3', 'K4'];
-    
-        $data['data_kim'] = $this->M_perhitungan_AHP->view()->result_array();
-    
-        // Array untuk menyimpan nilai eigen dari setiap data
-        $nilaiEigenSetiapData = [];
-    
-        foreach ($data['data_kim'] as $data_kim) {
-            $datavalues = [
-                $data_kim['bobot_event'],
-                $data_kim['bobot_medsos'],
-                $data_kim['bobot_website'],
-                $data_kim['bobot_sanksi']
-            ];
+{
+    $data['judul'] = 'Hasil Perhitungan';
+    $criteria = ['bobot_event', 'bobot_medsos', 'bobot_website', 'bobot_sanksi'];
+	$data['criteria'] = ['K1', 'K2', 'K3', 'K4'];
 
-            $total_bobot = array_sum($datavalues);
 
-            foreach ($datavalues as $key => $value) {
-                $datavalues[$key] /= $total_bobot;
-            }
-    
-            // Membuat matriks perbandingan dari nilai yang dimasukkan
-            $matriksPerbandingan = [];
-    
-            $a = $datavalues[0];
-            $b = $datavalues[1];
-            $c = $datavalues[2];
-            $d = $datavalues[3];
-    
-            // Row 1
-            $matriksPerbandingan[0][0] = $a;
-            $matriksPerbandingan[0][1] = $b;
-            $matriksPerbandingan[0][2] = $c;
-            $matriksPerbandingan[0][3] = $d;
-    
-            // Row 2
-            $matriksPerbandingan[1][0] = 1 / $b;
-            $matriksPerbandingan[1][1] = $a;
-            $matriksPerbandingan[1][2] = $b;
-            $matriksPerbandingan[1][3] = $c;
-    
-            // Row 3
-            $matriksPerbandingan[2][0] = 1 / $c;
-            $matriksPerbandingan[2][1] = 1 / $b;
-            $matriksPerbandingan[2][2] = $a;
-            $matriksPerbandingan[2][3] = $b;
-    
-            // Row 4
-            $matriksPerbandingan[3][0] = 1 / $d;
-            $matriksPerbandingan[3][1] = 1 / $c;
-            $matriksPerbandingan[3][2] = 1 / $b;
-            $matriksPerbandingan[3][3] = $a;
-    
-            // Menghitung jumlah setiap kolom
-            $jumlahKolom = [];
-            foreach ($matriksPerbandingan as $row) {
-                foreach ($row as $kolom => $nilai) {
-                    if (!isset($jumlahKolom[$kolom])) {
-                        $jumlahKolom[$kolom] = 0;
-                    }
-                    $jumlahKolom[$kolom] += $nilai;
+    // Ambil data dari database
+    $data['data_kim'] = $this->M_perhitungan_AHP->view()->result_array();
+
+    // Array untuk menyimpan semua hasil perhitungan
+    $all_calculations = array();
+
+    // Lakukan perhitungan untuk setiap baris data
+    foreach ($data['data_kim'] as $data_kim) {
+        $matriksPerbandingan = array();
+
+        // Dapatkan 'nama_kim' dari hasil query
+        $nama_kim = $data_kim['nama_kim'];
+
+        // Ganti nilai a, b, c, dan d dengan nilai dari database yang sesuai
+        $a = $data_kim['bobot_event'];
+        $b = $data_kim['bobot_medsos'];
+        $c = $data_kim['bobot_website'];
+        $d = $data_kim['bobot_sanksi'];
+
+        // Membuat matriks perbandingan dari nilai yang dimasukkan
+        $matriksPerbandingan = [
+            [$a, $b, $c, $d],
+            [1 / $b, $a, $b, $c],
+            [1 / $c, 1 / $b, $a, $b],
+            [1 / $d, 1 / $c, 1 / $b, $a]
+        ];
+
+        // Menghitung jumlah setiap kolom
+        $jumlahKolom = array();
+        foreach ($matriksPerbandingan as $row) {
+            foreach ($row as $kolom => $nilai) {
+                if (!isset($jumlahKolom[$kolom])) {
+                    $jumlahKolom[$kolom] = 0;
                 }
+                $jumlahKolom[$kolom] += $nilai;
             }
-    
-            // Menghitung nilai eigen
-            $nilaiEigen = [];
-            foreach ($matriksPerbandingan as $row) {
-                $kriteriaEigen = [];
-                foreach ($row as $kolom => $nilai) {
-                    $eigen = $nilai / $jumlahKolom[$kolom];
-                    $kriteriaEigen[] = $eigen;
-                }
-                $nilaiEigen[] = $kriteriaEigen;
-            }
-            
-              // Hitung total nilai rata-rata setiap kriteria
-              $total_rata_kriteria = array_sum($datavalues) / count($datavalues);
-
-              // Hitung nilai setiap KIM berdasarkan rumus yang diberikan
-              $nilai_kim = [];
-              for ($i = 0; $i < count($datavalues); $i++) {
-                  $nilai_kim[$i] = $total_rata_kriteria * $nilaiEigen[$i][0];
-                }
-              // Hitung total bobot kriteria
-              $total_bobot_kriteria = array_sum($datavalues);
-
-              // Simpan nilai KIM, total bobot kriteria, dan nama_kim ke dalam array $nilaiEigenSetiapData
-              $nama_kim = $data_kim['nama_kim']; // Pastikan ini sesuai dengan kolom 'nama_kim' di database
-
-              $nilaiEigenSetiapData[] = [
-                  'nama_kim' => $nama_kim,
-                  'bobot_event' => $data_kim['bobot_event'],
-                  'bobot_medsos' => $data_kim['bobot_medsos'],
-                  'bobot_website' => $data_kim['bobot_website'],
-                  'bobot_sanksi' => $data_kim['bobot_sanksi'],
-                  'total_bobot_kriteria' => $total_bobot_kriteria,
-                  'nilai_kim' => $nilai_kim,
-                  'total_nilai_kim' => array_sum($nilai_kim), // Jumlahkan nilai KIM
-              ];
-              }
-
-              // Urutkan berdasarkan total_nilai_kim dari yang terbesar ke terkecil
-              usort($nilaiEigenSetiapData, function ($a, $b) {
-              return $b['total_nilai_kim'] <=> $a['total_nilai_kim'];
-              });
-    
-        $data['nilaiEigenSetiapData'] = $nilaiEigenSetiapData;
-    
-        $this->load->view('superadmin/perhitungan/hasil', $data);
-    }
-    
-
-    //Detail Data
-    Public Function detail($id_anggota='')
-    {
-       $data['judul'] = 'Detail Perhitungan';
-       $data['criteria'] = ['K1', 'K2', 'K3', 'K4'];
-
-      //mengambil data dari database
-        $data['data'] = $this->M_perhitungan_AHP->view_id($id_anggota)->row_array();
-
-        for ($i=0; $i < count($data['data']); $i++) { 
-            $datavalues = array(
-                $data['data']['bobot_event'], 
-                $data['data']['bobot_medsos'], 
-                $data['data']['bobot_website'], 
-                $data['data']['bobot_sanksi']
-            );
         }
 
-           // Membuat matriks perbandingan dari nilai yang dimasukkan
-           $matriksPerbandingan = [];
-           $a = $datavalues[0];
-           $b = $datavalues[1];
-           $c = $datavalues[2];
-           $d = $datavalues[3];
+        // Menghitung nilai eigen
+        $nilaiEigen = array();
+        foreach ($matriksPerbandingan as $row) {
+            $kriteriaEigen = array();
+            foreach ($row as $kolom => $nilai) {
+                $eigen = $nilai / $jumlahKolom[$kolom];
+                $kriteriaEigen[] = $eigen;
+            }
+            $nilaiEigen[] = $kriteriaEigen;
+        }
 
-           //row 1
-           $matriksPerbandingan[0][0] = $a;
-           $matriksPerbandingan[0][1] = $b;
-           $matriksPerbandingan[0][2] = $c;
-           $matriksPerbandingan[0][3] = $d;
+        // Simpan hasil perhitungan untuk baris data saat ini ke dalam $all_calculations
+        $calculations = [
+            'nama_kim' => $nama_kim,
+            'matriksPerbandingan' => $matriksPerbandingan,
+            'jumlahKolom' => $jumlahKolom,
+            'nilaiEigen' => $nilaiEigen,
+			'criteria'	=> $data['criteria']
+        ];
 
-           //row 2
-           $matriksPerbandingan[1][0] = 1 / $b;
-           $matriksPerbandingan[1][1] = $a;
-           $matriksPerbandingan[1][2] = $b;
-           $matriksPerbandingan[1][3] = $c;
-
-           //row 3
-           $matriksPerbandingan[2][0] = 1 / $c;
-           $matriksPerbandingan[2][1] = 1 / $b;
-           $matriksPerbandingan[2][2] = $a;
-           $matriksPerbandingan[2][3] = $b;
-
-           //row 4
-           $matriksPerbandingan[3][0] = 1 / $d;
-           $matriksPerbandingan[3][1] = 1 / $c;
-           $matriksPerbandingan[3][2] = 1 / $b;
-           $matriksPerbandingan[3][3] = $a;
-           
- 
-     // Menghitung jumlah setiap kolom
-     $jumlahKolom = array();
-     foreach ($matriksPerbandingan as $row) {
-         foreach ($row as $kolom => $nilai) {
-             if (!isset($jumlahKolom[$kolom])) {
-                 $jumlahKolom[$kolom] = 0;
-             }
-             $jumlahKolom[$kolom] += $nilai;
-         }
-     }
- 
-     // Menghitung nilai eigen
-     $nilaiEigen = array();
-     foreach ($matriksPerbandingan as $row) {
-         $kriteriaEigen = array();
-         foreach ($row as $kolom => $nilai) {
-             $eigen = $nilai / $jumlahKolom[$kolom];
-             $kriteriaEigen[] = $eigen;
-         }
-         $nilaiEigen[] = $kriteriaEigen;
-     }
-
-     //perangkingan untuk menentukan urutan peringkat
-      $data['data']['bobot_event'] = $nilaiEigen[0][0];
-      $data['data']['bobot_medsos'] = $nilaiEigen[1][0];
-      $data['data']['bobot_website'] = $nilaiEigen[2][0];
-      $data['data']['bobot_sanksi'] = $nilaiEigen[3][0];
-      $data['data']['peringkat'] = $nilaiEigen[0][0] + $nilaiEigen[1][0] + $nilaiEigen[2][0] + $nilaiEigen[3][0];
-      
- 
-     // Tampilkan hasil perhitungan dalam tampilan
-     $data['matriksPerbandingan'] = $matriksPerbandingan;
-     $data['jumlahKolom'] = $jumlahKolom;
-     $data['nilaiEigen'] = $nilaiEigen;
-     $data['perangkingan'] = $data['data']['peringkat'];
-
-      $this->load->view('superadmin/perhitungan/nilai_perbandingan_detail', $data);
+        $all_calculations[] = $calculations;
     }
+
+    // Tampilkan hasil perhitungan dalam tampilan
+    $data['all_calculations'] = $all_calculations;
+
+    $this->load->view('superadmin/perhitungan/hasil', $data);
+}
+
 
 	
 }
