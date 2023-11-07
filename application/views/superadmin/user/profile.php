@@ -13,12 +13,7 @@ if($aksi == "lihat"):
                 : <?= $nama ?>
             </td>
         </tr>
-        <tr>
-            <th>NIDN</th>
-            <td>
-                : <?= $nidn ?>
-            </td>
-        </tr>
+      
         <tr>
             <th>Keterangan</th>
             <td>
@@ -73,15 +68,7 @@ if($aksi == "lihat"):
                                     autocomplete="off" required>
                             </td>
                         </tr>
-                        <tr>
-                            <th>NIDN</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="number" name="nidn" value="<?= $nidn ?>" class="form-control"
-                                    autocomplete="off" required>
-                            </td>
-                        </tr>
+                       
                         <tr>
                             <th>Keterangan</th>
                         </tr>

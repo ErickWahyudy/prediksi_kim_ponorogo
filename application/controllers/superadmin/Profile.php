@@ -31,7 +31,6 @@ class Profile extends CI_controller
     'judul'           =>'Data Akun Profile',
     'id_pengguna'     =>$data['id_pengguna'],
     'nama'            =>$data['nama'],
-    'nidn'            =>$data['nidn'],
     'keterangan'      =>$data['keterangan'],
     'email'           =>$data['email'],
     'password'        =>$data['password'],
@@ -49,11 +48,6 @@ class Profile extends CI_controller
         'rules' => 'required'
       ),
       array(
-        'field' => 'nidn',
-        'label' => 'nidn',
-        'rules' => 'required'
-      ),
-      array(
         'field' => 'email',
         'label' => 'email',
         'rules' => 'required'
@@ -68,7 +62,6 @@ class Profile extends CI_controller
     } else {
       $SQLupdate = [
         'nama'            => $this->input->post('nama'),
-        'nidn'            => $this->input->post('nidn'),
         'keterangan'      => $this->input->post('keterangan'),
         'email'           => $this->input->post('email')
       ];

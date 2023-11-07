@@ -103,15 +103,6 @@ class Pengguna extends CI_controller
         ),
       ),
       array(
-        'field' => 'nidn',
-        'label' => 'NIDN',
-        'rules' => 'required|is_unique[tb_pengguna.nidn]',
-        'errors' => array(
-            'required' => 'NIDN tidak boleh kosong',
-            'is_unique' => 'NIDN sudah terdaftar',
-        ),
-      ),
-      array(
         'field' => 'keterangan',
         'label' => 'Keterangan',
         'rules' => 'required',
@@ -141,7 +132,6 @@ class Pengguna extends CI_controller
       $SQLinsert = [
         'id_pengguna'       =>$this->id_pengguna_urut(),
         'nama'              =>$this->input->post('nama'),
-        'nidn'              =>$this->input->post('nidn'),
         'keterangan'        =>$this->input->post('keterangan'),
         'email'             =>$this->input->post('email'),
         'password'          =>md5($this->input->post('password')),
@@ -178,14 +168,6 @@ class Pengguna extends CI_controller
         ),
       ),
       array(
-        'field' => 'nidn',
-        'label' => 'NIDN',
-        'rules' => 'required',
-        'errors' => array(
-            'required' => 'NIDN tidak boleh kosong',
-        ),
-      ),
-      array(
         'field' => 'keterangan',
         'label' => 'Keterangan',
         'rules' => 'required',
@@ -213,7 +195,6 @@ class Pengguna extends CI_controller
         } else {
           $SQLupdate = [
             'nama'            => $this->input->post('nama'),
-            'nidn'            => $this->input->post('nidn'),
             'keterangan'      => $this->input->post('keterangan'),
             'email'           => $this->input->post('email'),
             'id_level'        => $this->input->post('id_level')
