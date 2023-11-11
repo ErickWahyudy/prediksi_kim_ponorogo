@@ -22,7 +22,6 @@ CREATE TABLE `tb_anggota_kim` (
 INSERT INTO `tb_anggota_kim` (`id_anggota`, `nama_kim`, `wilayah`, `id_event`, `id_medsos`, `id_website`, `id_sanksi`) VALUES ('K001TAHSNH', 'Jalen Media', 'Jalen Balong Ponorogo', 'E0018gySpF', 'M0012Jh54s', 'W001aPYLoM', 'S001UTsVaV');
 INSERT INTO `tb_anggota_kim` (`id_anggota`, `nama_kim`, `wilayah`, `id_event`, `id_medsos`, `id_website`, `id_sanksi`) VALUES ('K002RyIw8A', 'Balong Kim ID', 'Kec Balong', 'E002pNLFkb', 'M0025DRB22', 'W002BmveoC', 'S0023t5DGw');
 INSERT INTO `tb_anggota_kim` (`id_anggota`, `nama_kim`, `wilayah`, `id_event`, `id_medsos`, `id_website`, `id_sanksi`) VALUES ('K003zP4WFE', 'Karangmojo Center', 'Balong', 'E003B0qVwm', 'M003bvfGTb', 'W003X70vNV', 'S003jafB8m');
-INSERT INTO `tb_anggota_kim` (`id_anggota`, `nama_kim`, `wilayah`, `id_event`, `id_medsos`, `id_website`, `id_sanksi`) VALUES ('K004jft5SM', 'Menjayan Kim ', 'Ponorogo', 'E0043s2g1J', 'M004kowGR4', 'W004xQ1V3d', 'S004wHrhzX');
 
 
 #
@@ -44,7 +43,6 @@ CREATE TABLE `tb_event` (
 INSERT INTO `tb_event` (`id_event`, `id_anggota`, `bobot_event`, `jumlah_event`) VALUES ('E0018gySpF', 'K001TAHSNH', '2', '1-3');
 INSERT INTO `tb_event` (`id_event`, `id_anggota`, `bobot_event`, `jumlah_event`) VALUES ('E002pNLFkb', 'K002RyIw8A', '2', '4-7');
 INSERT INTO `tb_event` (`id_event`, `id_anggota`, `bobot_event`, `jumlah_event`) VALUES ('E003B0qVwm', 'K003zP4WFE', '4', '1-3');
-INSERT INTO `tb_event` (`id_event`, `id_anggota`, `bobot_event`, `jumlah_event`) VALUES ('E0043s2g1J', 'K004jft5SM', '2', '1-3');
 
 
 #
@@ -82,7 +80,6 @@ CREATE TABLE `tb_medsos` (
 INSERT INTO `tb_medsos` (`id_medsos`, `id_anggota`, `bobot_medsos`, `jumlah_medsos`) VALUES ('M0012Jh54s', 'K001TAHSNH', '5', '1-2');
 INSERT INTO `tb_medsos` (`id_medsos`, `id_anggota`, `bobot_medsos`, `jumlah_medsos`) VALUES ('M0025DRB22', 'K002RyIw8A', '4', '4');
 INSERT INTO `tb_medsos` (`id_medsos`, `id_anggota`, `bobot_medsos`, `jumlah_medsos`) VALUES ('M003bvfGTb', 'K003zP4WFE', '2', '1-2');
-INSERT INTO `tb_medsos` (`id_medsos`, `id_anggota`, `bobot_medsos`, `jumlah_medsos`) VALUES ('M004kowGR4', 'K004jft5SM', '2', '1-2');
 
 
 #
@@ -121,7 +118,7 @@ CREATE TABLE `tb_pengguna` (
   CONSTRAINT `tb_pengguna_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `tb_level` (`id_level`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `tb_pengguna` (`id_pengguna`, `nama`, `keterangan`, `email`, `password`, `id_level`) VALUES ('A001bnHDs', 'Erik Wahyudi', 'Superadmin', 'erik@gmail.com', '202cb962ac59075b964b07152d234b70', '1');
+INSERT INTO `tb_pengguna` (`id_pengguna`, `nama`, `keterangan`, `email`, `password`, `id_level`) VALUES ('A001bnHDs', 'Erik Wahyudi', 'admin utama', 'erik@gmail.com', '202cb962ac59075b964b07152d234b70', '1');
 
 
 #
@@ -142,7 +139,6 @@ CREATE TABLE `tb_sanksi` (
 INSERT INTO `tb_sanksi` (`id_sanksi`, `id_anggota`, `bobot_sanksi`) VALUES ('S001UTsVaV', 'K001TAHSNH', '4');
 INSERT INTO `tb_sanksi` (`id_sanksi`, `id_anggota`, `bobot_sanksi`) VALUES ('S0023t5DGw', 'K002RyIw8A', '4');
 INSERT INTO `tb_sanksi` (`id_sanksi`, `id_anggota`, `bobot_sanksi`) VALUES ('S003jafB8m', 'K003zP4WFE', '4');
-INSERT INTO `tb_sanksi` (`id_sanksi`, `id_anggota`, `bobot_sanksi`) VALUES ('S004wHrhzX', 'K004jft5SM', '4');
 
 
 #
@@ -163,6 +159,5 @@ CREATE TABLE `tb_website` (
 INSERT INTO `tb_website` (`id_website`, `id_anggota`, `bobot_website`) VALUES ('W001aPYLoM', 'K001TAHSNH', '2');
 INSERT INTO `tb_website` (`id_website`, `id_anggota`, `bobot_website`) VALUES ('W002BmveoC', 'K002RyIw8A', '4');
 INSERT INTO `tb_website` (`id_website`, `id_anggota`, `bobot_website`) VALUES ('W003X70vNV', 'K003zP4WFE', '5');
-INSERT INTO `tb_website` (`id_website`, `id_anggota`, `bobot_website`) VALUES ('W004xQ1V3d', 'K004jft5SM', '2');
 
 

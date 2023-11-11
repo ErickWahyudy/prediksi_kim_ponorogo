@@ -36,8 +36,8 @@ class Hasil extends CI_controller
 	}
 
     //Lihat Data
-    public function index()
-{
+    public function nilai_akhir()
+    {
     $data['judul'] = 'Hasil Perhitungan';
     $criteria = ['bobot_event', 'bobot_medsos', 'bobot_website', 'bobot_sanksi'];
 	$data['criteria'] = ['K1', 'K2', 'K3', 'K4'];
@@ -107,7 +107,7 @@ class Hasil extends CI_controller
     // Tampilkan hasil perhitungan dalam tampilan
     $data['all_calculations'] = $all_calculations;
 
-    $this->load->view('superadmin/perhitungan/hasil', $data);
+    $this->load->view('superadmin/perhitungan/nilai_akhir', $data);;
 }
 
 

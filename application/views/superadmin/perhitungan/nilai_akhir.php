@@ -57,4 +57,5 @@
         </tbody>
     </table>
 
+
 <?php $this->load->view('template/footer'); ?>
