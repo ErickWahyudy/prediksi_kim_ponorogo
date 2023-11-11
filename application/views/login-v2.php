@@ -115,14 +115,12 @@
       </div> -->
       <!-- /.social-auth-links -->
 
-      <!-- <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p>
+      <br>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="<?= base_url('kim/nilai') ?>" class="text-center">Lihat Nilai KIM...</a>
       </p>
-    </div> -->
-        <center> <br> <br>
+    </div>
+        <center>
 					<strong>Copyright &copy; <?php echo date('Y'); ?>
           <?php  $nama_judul = $this->db->get('tb_pengaturan')->row_array(); ?>
 					<a href="https://bit.ly/kassandrahdproduction" target="blank"><?= $nama_judul['nama_judul'] ?></a>.</strong> All rights reserved.
