@@ -289,7 +289,7 @@ if($aksi == "admin"):
         $('#add').submit(function(e) {
             e.preventDefault();
             $.ajax({
-                url: "<?= site_url('superadmin/pengguna/api_add') ?>",
+                url: "<?= site_url('admin/pengguna/api_add') ?>",
                 type: "POST",
                 data: new FormData(this),
                 processData: false,
@@ -342,7 +342,7 @@ if($aksi == "admin"):
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('superadmin/pengguna/api_edit/') ?>" + form_data.get(
+            url: "<?php echo site_url('admin/pengguna/api_edit/') ?>" + form_data.get(
                 'id_pengguna'),
             dataType: "json",
             data: form_data,
@@ -383,7 +383,7 @@ if($aksi == "admin"):
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('superadmin/pengguna/api_password/') ?>" + form_data.get(
+            url: "<?php echo site_url('admin/pengguna/api_password/') ?>" + form_data.get(
                 'id_pengguna'),
             dataType: "json",
             data: form_data,
@@ -433,7 +433,7 @@ if($aksi == "admin"):
             if (result.value) { // Only delete the data if the user clicked on the confirm button
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('superadmin/pengguna/api_hapus/') ?>" + id_pengguna,
+                    url: "<?php echo site_url('admin/pengguna/api_hapus/') ?>" + id_pengguna,
                     dataType: "json",
                 }).done(function() {
                     swal({

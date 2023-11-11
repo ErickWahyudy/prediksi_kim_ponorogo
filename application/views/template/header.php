@@ -62,7 +62,7 @@
 		}
     </style>
 </head>
-<body class="hold-transition skin-purple sidebar-mini">
+<body class="hold-transition skin-yellow sidebar-mini">
 <div class="wrapper">
 <?php
 //error_reporting(0);
@@ -236,8 +236,8 @@ if($this->session->userdata('level') =="1"){
               </li>
           </ul>
        <!-- <li><a href="<?= base_url('superadmin/kriteria/lihat') ?>"><i class="fa fa-houzz"></i> <span>Data Kriteria</span></a></li> -->
-      <!-- <li><a href="<?= base_url('superadmin/pengguna/admin'); ?>"><i class="fa fa-user"></i> <span>Data Admin</span></a></li>
-      <li><a href="<?= base_url('superadmin/pengguna/user_superadmin') ?>" class="active"><i class="fa  fa-buysellads"></i> <span>Data superadmin</span></a></li> -->
+      <li><a href="<?= base_url('superadmin/pengguna/admin'); ?>"><i class="fa fa-user"></i> <span>Data Admin</span></a></li>
+      <!-- <li><a href="<?= base_url('superadmin/pengguna/user_superadmin') ?>" class="active"><i class="fa  fa-buysellads"></i> <span>Data superadmin</span></a></li> -->
  
       <li class="header">OTHER</li>
       <li><a href="<?= base_url('superadmin/profile'); ?>"><i class="fa fa-user"></i> <span>Akun Profile</span></a></li>
@@ -256,9 +256,24 @@ if($this->session->userdata('level') =="1"){
           </a>
         </li>
         <li class="header">OLAH DATA</li>
-        <li><a href="<?= base_url('admin/cek_plagiasi/input') ?>"><i class="fa fa-check-square-o"></i> <span>Cek Plagiasi Judul</span></a></li>
-        <li><a href="<?= base_url('admin/judul_skripsi/lihat') ?>" class="active"><i class="fa fa-eye"></i>Lihat Data Judul Skripsi</a></li>                 
-      <li><a href="<?= base_url('admin/pengguna/dosen'); ?>"><i class="fa fa-users"></i> <span>Data Dosen</span></a></li>
+        <!-- cek plagiasi judul -->
+        <li><a href="<?= base_url('admin/anggota_kim/lihat') ?>"><i class="fa fa-gg"></i> <span>Data Anggota KIM</span></a></li>
+      <li class="treeview">
+          <a href="#">
+            <i class="fa fa-bar-chart-o"> </i> <span>Perhitungan Nilai</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu active">
+              <li class="treeview">
+                  <li><a href="<?= base_url('admin/perhitungan/nilai/nilai_asli') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Asli</span></a></li>  
+                  <!-- <li><a href="<?= base_url('admin/perhitungan/nilai/hitungBobotAHP') ?>"><i class="fa fa-circle-o"></i> <span>Hitung Bobot</span></a></li> -->
+                  <li><a href="<?= base_url('admin/perhitungan/nilai_perbandingan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perbandingan</span></a></li>
+                  <li><a href="<?= base_url('admin/perhitungan/hasil/nilai_akhir') ?>"><i class="fa fa-circle-o"></i> <span>Hasil Perhitungan</span></a></li>              
+              </li>
+          </ul>
+       <!-- <li><a href="<?= base_url('admin/kriteria/lihat') ?>"><i class="fa fa-houzz"></i> <span>Data Kriteria</span></a></li> -->
       <li><a href="<?= base_url('admin/pengguna/admin'); ?>"><i class="fa fa-user"></i> <span>Data Admin</span></a></li>
  
       <li class="header">OTHER</li>
