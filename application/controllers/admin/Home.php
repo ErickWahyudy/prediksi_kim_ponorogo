@@ -64,10 +64,10 @@ class Home extends CI_controller
 
         // Membuat matriks perbandingan dari nilai yang dimasukkan
         $matriksPerbandingan = [
-            [$a, $b, $c, $d],
-            [1 / $b, $a, $b, $c],
-            [1 / $c, 1 / $b, $a, $b],
-            [1 / $d, 1 / $c, 1 / $b, $a]
+            [1, $a, $b, $c],
+            [1 / $a, 1, $a, $b],
+            [1 / $b, 1 / $a, 1, $a],
+            [1 / $c, 1 / $b, 1 / $a, 1]
         ];
 
         // Menghitung jumlah setiap kolom
