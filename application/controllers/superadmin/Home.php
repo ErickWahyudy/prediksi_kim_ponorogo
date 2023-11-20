@@ -38,7 +38,7 @@ class Home extends CI_controller
     //Lihat Data
     public function index()
 {
-    $data['judul'] = 'Perhitungan Nilai';
+    $data['judul'] = 'Hasil Perhitungan';
     $criteria = ['bobot_event', 'bobot_medsos', 'bobot_website', 'bobot_sanksi'];
 	$data['criteria'] = ['K1', 'K2', 'K3', 'K4'];
 
@@ -62,12 +62,12 @@ class Home extends CI_controller
         $c = $data_kim['bobot_website'];
         $d = $data_kim['bobot_sanksi'];
 
-        // Membuat matriks perbandingan dari nilai yang dimasukkan
-        $matriksPerbandingan = [
-            [$a, $b, $c, $d],
-            [1 / $b, $a, $b, $c],
-            [1 / $c, 1 / $b, $a, $b],
-            [1 / $d, 1 / $c, 1 / $b, $a]
+         // Membuat matriks perbandingan dari nilai yang dimasukkan
+         $matriksPerbandingan = [
+            [1, $a, 1 / $c, $b],
+            [1 / $a, 1, 1 / $d, $c],
+            [$c, $d, 1, $a],
+            [1 / $b, 1 / $c, 1 / $a, 1]
         ];
 
         // Menghitung jumlah setiap kolom
@@ -92,12 +92,20 @@ class Home extends CI_controller
             $nilaiEigen[] = $kriteriaEigen;
         }
 
+        //Rata rata nilai eigen
+        $rataRataEigen = array();
+        foreach ($nilaiEigen as $row) {
+            $rataRataEigen[] = array_sum($row) / count($row);
+        }
+
         // Simpan hasil perhitungan untuk baris data saat ini ke dalam $all_calculations
         $calculations = [
             'nama_kim' => $nama_kim,
             'matriksPerbandingan' => $matriksPerbandingan,
             'jumlahKolom' => $jumlahKolom,
             'nilaiEigen' => $nilaiEigen,
+            'rataRataEigen' => $rataRataEigen,
+            'rataRataEigen_sorted' => $rataRataEigen,
 			'criteria'	=> $data['criteria']
         ];
 

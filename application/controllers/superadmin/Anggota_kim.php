@@ -177,141 +177,89 @@ class Anggota_kim extends CI_controller
         ),
     );
     $this->form_validation->set_rules($rules);
-    if ($this->form_validation->run() == FALSE) {
-      $response = [
-        'status' => false,
-        'message' => validation_errors(),
-      ];
-    } else {
-      $id_anggota = $this->id_anggota_urut();
-      $id_event = $this->id_event_urut();
-      $id_medsos = $this->id_medsos_urut();
-      $id_website = $this->id_website_urut();
-      $id_sanksi = $this->id_sanksi_urut();
-
-      $SQLinsert1 = [
-        'id_anggota'            =>$id_anggota,
-        'nama_kim'              =>$this->input->post('nama_kim'),
-        'wilayah'               =>$this->input->post('wilayah'),
-        'id_event'              =>$id_event,
-        'id_medsos'             =>$id_medsos,
-        'id_website'            =>$id_website,
-        'id_sanksi'             =>$id_sanksi
-      ];
-
-      $SQLinsert2 = [
-        'id_event'              =>$id_event,
-        'id_anggota'            =>$id_anggota,
-        'bobot_event'           =>$this->input->post('bobot_event'),
-        'jumlah_event'          =>$this->input->post('jumlah_event')
-      ];
-      
-      $SQLinsert3 = [
-        'id_medsos'             =>$id_medsos,
-        'id_anggota'            =>$id_anggota,
-        'bobot_medsos'          =>$this->input->post('bobot_medsos'),
-        'jumlah_medsos'         =>$this->input->post('jumlah_medsos')
-      ];
-
-      $SQLinsert4 = [
-        'id_website'            =>$id_website,
-        'id_anggota'            =>$id_anggota,
-        'bobot_website'         =>$this->input->post('bobot_website')
-      ];
-
-      $SQLinsert5 = [
-        'id_sanksi'             =>$id_sanksi,
-        'id_anggota'            =>$id_anggota,
-        'bobot_sanksi'          =>$this->input->post('bobot_sanksi')
-      ];
-
-      if ($this->m_anggota_kim->add($SQLinsert1) && $this->m_event->add($SQLinsert2) && $this->m_medsos->add($SQLinsert3) && $this->m_website->add($SQLinsert4) && $this->m_sanksi->add($SQLinsert5)) {
-        $response = [
-          'status' => true,
-          'message' => 'Berhasil menambahkan data'
-        ];
-      } else {
+      if ($this->form_validation->run() == FALSE) {
         $response = [
           'status' => false,
-          'message' => 'Gagal menambahkan data'
+          'message' => validation_errors(),
         ];
-      }
-  }
-  
-  $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($response));
-}
+      } else {
+        $id_anggota = $this->id_anggota_urut();
+        $id_event = $this->id_event_urut();
+        $id_medsos = $this->id_medsos_urut();
+        $id_website = $this->id_website_urut();
+        $id_sanksi = $this->id_sanksi_urut();
 
-      //API edit
-      public function api_edit($id='', $SQLupdate='')
-      {
-        $rules = array(
-          array(
-            'field' => 'nama_kim',
-            'label' => 'Nama KIM',
-            'rules' => 'required',
-            'errors' => array(
-                'required' => 'Nama KIM tidak boleh kosong',
-              ),
-            ),
-            array(
-              'field' => 'wilayah',
-              'label' => 'Wilayah',
-              'rules' => 'required',
-              'errors' => array(
-                  'required' => 'Wilayah tidak boleh kosong',
-                ),
-              ),  
-      );
+        //menyimpan nama event jika checkbox event di centang lebih dari satu
+        $nama_event = $this->input->post('nama_event[]');
+        $nama_event_json = json_encode($nama_event);
+        $nama_event_array = json_decode($nama_event_json);
+        $nama_event_simpan = implode(", ", $nama_event_array);
+        //menyiapkan bobot event dari inputan nama event yang setiap nama event nilai bobotnya 1
+        $bobot_event = count($nama_event_array);
 
-        $this->form_validation->set_rules($rules);
-        if ($this->form_validation->run() == FALSE) {
+        //menyimpan nama medsos jika checkbox event di centang lebih dari satu
+        $nama_medsos = $this->input->post('nama_medsos[]');
+        $nama_medsos_json = json_encode($nama_medsos);
+        $nama_medsos_array = json_decode($nama_medsos_json);
+        $nama_medsos_simpan = implode(", ", $nama_medsos_array);
+        $bobot_medsos = count($nama_medsos_array);
+
+        $bobot_website = $this->input->post('bobot_website');
+        $bobot_sanksi = $this->input->post('bobot_sanksi');
+
+        $SQLinsert1 = [
+          'id_anggota'            =>$id_anggota,
+          'nama_kim'              =>$this->input->post('nama_kim'),
+          'wilayah'               =>$this->input->post('wilayah'),
+          'id_event'              =>$id_event,
+          'id_medsos'             =>$id_medsos,
+          'id_website'            =>$id_website,
+          'id_sanksi'             =>$id_sanksi
+        ];
+
+        $SQLinsert2 = [
+          'id_event'              => $id_event,
+          'id_anggota'            => $id_anggota,
+          'bobot_event'           => $bobot_event,
+          'nama_event'            => $nama_event_simpan,
+        ];
+        
+        $SQLinsert3 = [
+          'id_medsos'             => $id_medsos,
+          'id_anggota'            => $id_anggota,
+          'bobot_medsos'          => $bobot_medsos,
+          'nama_medsos'           => $nama_medsos_simpan
+        ];
+
+        $SQLinsert4 = [
+          'id_website'            => $id_website,
+          'id_anggota'            => $id_anggota,
+          'bobot_website'         => $bobot_website
+        ];
+
+        $SQLinsert5 = [
+          'id_sanksi'             => $id_sanksi,
+          'id_anggota'            => $id_anggota,
+          'bobot_sanksi'          => $bobot_sanksi
+        ];
+
+        if ($this->m_anggota_kim->add($SQLinsert1) && $this->m_event->add($SQLinsert2) && $this->m_medsos->add($SQLinsert3) && $this->m_website->add($SQLinsert4) && $this->m_sanksi->add($SQLinsert5)) {
           $response = [
-            'status' => false,
-            'message' => 'Tidak ada data'
+            'status' => true,
+            'message' => 'Berhasil menambahkan data'
           ];
         } else {
-
-          $SQLupdate1 = [
-            'nama_kim'              =>$this->input->post('nama_kim'),
-            'wilayah'               =>$this->input->post('wilayah')
+          $response = [
+            'status' => false,
+            'message' => 'Gagal menambahkan data'
           ];
-
-          $SQLupdate2 = [
-            'bobot_event'           =>$this->input->post('bobot_event'),
-            'jumlah_event'          =>$this->input->post('jumlah_event')
-          ];
-
-          $SQLupdate3 = [
-            'bobot_medsos'          =>$this->input->post('bobot_medsos'),
-            'jumlah_medsos'         =>$this->input->post('jumlah_medsos')
-          ];
-
-          $SQLupdate4 = [
-            'bobot_website'         =>$this->input->post('bobot_website')
-          ];
-
-          $SQLupdate5 = [
-            'bobot_sanksi'          =>$this->input->post('bobot_sanksi')
-          ];
-
-          if ($this->m_anggota_kim->update($id, $SQLupdate1) && $this->m_event->update($id, $SQLupdate2) && $this->m_medsos->update($id, $SQLupdate3) && $this->m_website->update($id, $SQLupdate4) && $this->m_sanksi->update($id, $SQLupdate5)) {
-            $response = [
-              'status' => true,
-              'message' => 'Berhasil mengubah data'
-            ];
-          } else {
-            $response = [
-              'status' => false,
-              'message' => 'Gagal mengubah data'
-            ];
-          }
         }
-        $this->output
-          ->set_content_type('application/json')
-          ->set_output(json_encode($response));
-      }
+    }
+    
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($response));
+  }
 
       
       //API hapus

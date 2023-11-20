@@ -230,8 +230,7 @@ if($this->session->userdata('level') =="1"){
           <ul class="treeview-menu active">
               <li class="treeview">
                   <li><a href="<?= base_url('superadmin/perhitungan/nilai/nilai_asli') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Asli</span></a></li>  
-                  <!-- <li><a href="<?= base_url('superadmin/perhitungan/nilai/hitungBobotAHP') ?>"><i class="fa fa-circle-o"></i> <span>Hitung Bobot</span></a></li> -->
-                  <li><a href="<?= base_url('superadmin/perhitungan/nilai_perbandingan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perbandingan</span></a></li>
+                  <li><a href="<?= base_url('superadmin/perhitungan/nilai_perhitungan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perhitungan</span></a></li>
                   <li><a href="<?= base_url('superadmin/perhitungan/hasil/nilai_akhir') ?>"><i class="fa fa-circle-o"></i> <span>Hasil Perhitungan</span></a></li>              
               </li>
           </ul>
@@ -268,8 +267,7 @@ if($this->session->userdata('level') =="1"){
           <ul class="treeview-menu active">
               <li class="treeview">
                   <li><a href="<?= base_url('admin/perhitungan/nilai/nilai_asli') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Asli</span></a></li>  
-                  <!-- <li><a href="<?= base_url('admin/perhitungan/nilai/hitungBobotAHP') ?>"><i class="fa fa-circle-o"></i> <span>Hitung Bobot</span></a></li> -->
-                  <li><a href="<?= base_url('admin/perhitungan/nilai_perbandingan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perbandingan</span></a></li>
+                  <li><a href="<?= base_url('admin/perhitungan/nilai_perhitungan') ?>"><i class="fa fa-circle-o"></i> <span>Nilai Perhitungan</span></a></li>
                   <li><a href="<?= base_url('admin/perhitungan/hasil/nilai_akhir') ?>"><i class="fa fa-circle-o"></i> <span>Hasil Perhitungan</span></a></li>              
               </li>
           </ul>
@@ -279,21 +277,6 @@ if($this->session->userdata('level') =="1"){
       <li class="header">OTHER</li>
       <li><a href="<?= base_url('admin/profile'); ?>"><i class="fa fa-user"></i> <span>Akun Profile</span></a></li>
 
-   <?php }elseif($this->session->userdata('level') == "3"){ ?>
-
-    <li class="">
-          <a href="<?= base_url('dosen/home') ?>">
-            <i class="fa fa-dashboard"></i> <span>Dasboard</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">Home</small>
-            </span>
-          </a>
-        </li>
-        <li class="header">OLAH DATA</li>
-        <li><a href="<?= base_url('dosen/cek_plagiasi/input') ?>"><i class="fa fa-check-square-o"></i> <span>Cek Plagiasi Judul</span></a></li>
-      <li class="header">OTHER</li>
-      <li><a href="<?= base_url('dosen/profile'); ?>"><i class="fa fa-user"></i> <span>Akun Profile</span></a></li>
-  
 <?php } ?>
   <!-- logout -->
   <li> <a href="javascript:void(0)" onclick="keluar()"><i class="fa fa-sign-out"></i> <span>Keluar</span></a></li>

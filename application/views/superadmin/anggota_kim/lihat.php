@@ -1,5 +1,5 @@
 <?php $this->load->view('template/header'); ?>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <?php 
 if($aksi == "lihat"):
 ?>
@@ -28,28 +28,10 @@ if($aksi == "lihat"):
                 <td><?= $anggota_kim['nama_kim'] ?></td>
                 <td><?= $anggota_kim['wilayah'] ?></td>
                 <td>  
-                    <?php $stt = $anggota_kim['bobot_event'];
-                        if ($stt == 2) {
-                            echo "Pelantikan, Monitoring";
-                        } elseif ($stt == 3) {
-                            echo "Giat Desa 2x, Pelantikan, Monitoring";
-                        } elseif ($stt == 4) {
-                            echo "Giat Desa 3x, Bimtek 2x, Pelantikan, Studi Banding, Monitoring";
-                        } elseif ($stt == 5) {
-                            echo "Giat Desa 5x, Bimtek 4x, Pelantikan, Monitoring, Pekan KIM";
-                        } ?>
+                   <?= $anggota_kim['nama_event'] ?> (<?= $anggota_kim['bobot_event'] ?>)
                 </td>
                 <td>  
-                    <?php $stt = $anggota_kim['bobot_medsos'];
-                        if ($stt == 2) {
-                            echo "Instagram, Twitter";
-                        } elseif ($stt == 3) {
-                            echo "Instagram, Twitter, Facebook";
-                        } elseif ($stt == 4) {
-                            echo "Instagram, Twitter, Facebook, Youtube";
-                        } elseif ($stt == 5) {
-                            echo "Instagram, Twitter, Facebook, Youtube, Tiktok";
-                        } ?>
+                    <?= $anggota_kim['nama_medsos'] ?> (<?= $anggota_kim['bobot_medsos'] ?>)
                 </td>
                 <td>
                     <?php $stt = $anggota_kim['bobot_website'];
@@ -62,6 +44,7 @@ if($aksi == "lihat"):
                         } elseif ($stt == 5) {
                             echo "Memiliki Website, Tampilan Sangat Menarik, Fitur Sangat Lengkap, Aktif Update Berita, Advertising";
                         } ?>
+                    (<?= $anggota_kim['bobot_website'] ?>)
                 </td>
                 <td>
                     <?php $stt = $anggota_kim['bobot_sanksi'];
@@ -76,22 +59,20 @@ if($aksi == "lihat"):
                         } ?>
                 </td>
                 <td>
-                    <a href="" class="btn btn-warning" data-toggle="modal"
-                        data-target="#edit<?= $anggota_kim['id_anggota'] ?>"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="javascript:void(0)" onclick="hapus_anggotakim('<?= $anggota_kim['id_anggota'] ?>')"
+                        class="btn btn-danger" title="Hapus"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
             <?php $no++; endforeach; ?>
         </tbody>
     </table>
 
-    <!-- Modal tambah data -->
-    <div class="modal fade" id="modalTambahDataKIM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
+   <!-- Modal tambah data -->
+    <div class="modal fade" id="modalTambahDataKIM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-purple">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Tambah <?= $judul ?></h4>
                 </div>
                 <div class="modal-body table-responsive">
@@ -102,8 +83,7 @@ if($aksi == "lihat"):
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" name="nama_kim" class="form-control" placeholder="Nama KIM"
-                                        autocomplete="off" required="">
+                                    <input type="text" name="nama_kim" class="form-control" placeholder="Nama KIM" autocomplete="off" required="">
                                 </td>
                             </tr>
                             <tr>
@@ -111,68 +91,74 @@ if($aksi == "lihat"):
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" name="wilayah" class="form-control" placeholder="Wilayah"
-                                        autocomplete="off" required="">
+                                    <input type="text" name="wilayah" class="form-control" placeholder="Wilayah" autocomplete="off" required="">
                                 </td>
                             </tr>
                             <tr>
-                                <th>Event</th>
+                                <th>Kriteria Event</th>
                             </tr>
                             <tr>
                                 <td>
-                                    <select name="bobot_event" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Event --</option>
-                                        <option value="2">Pelantikan, Monitoring</option>
-                                        <option value="3">Giat Desa 2x, Pelantikan, Monitoring</option>
-                                        <option value="4">Giat Desa 3x, Bimtek 2x, Pelantikan, Studi Banding,
-                                            Monitoring</option>
-                                        <option value="5">Giat Desa 5x, Bimtek 4x, Pelantikan,
-                                            Monitoring, Pekan KIM</option>
-                                    </select>
+                                    <div id="dynamic_field">
+                                    <label class="checkbox-inline" for="event1">
+                                        <input type="checkbox" id="event1" name="nama_event[]" value="Pelantikan"> Pelantikan
+                                    </label>
+                                    <label class="checkbox-inline" for="event2">
+                                        <input type="checkbox" id="event2" name="nama_event[]" value="Monitoring"> Monitoring
+                                    </label>
+                                    <label class="checkbox-inline" for="event3">
+                                        <input type="checkbox" id="event3" name="nama_event[]" value="Giat Desa"> Giat Desa
+                                    </label>
+                                    <label class="checkbox-inline" for="event4">
+                                        <input type="checkbox" id="event4" name="nama_event[]" value="Bimtek"> Bimtek
+                                    </label><br>
+                                    <label class="checkbox-inline" for="event5">
+                                        <input type="checkbox" id="event5" name="nama_event[]" value="Studi Banding"> Studi Banding
+                                    </label>
+                                    <label class="checkbox-inline" for="event6">
+                                        <input type="checkbox" id="event6" name="nama_event[]" value="Pekan KIM"> Pekan KIM
+                                    </label>
+                                    <label id="checkbox_items">
+                                        <!-- Tempat untuk menambahkan elemen checkbox dinamis -->
+                                    </label><br>
+                                     <!-- membuat klik tombol tambah item -->
+                                     <input type="text" id="new_item" class="form-control" placeholder="tambah item lainnya" autocomplete="off" style="width: 30%; display: inline-block;">
+                                        <button type="button" class="btn btn-primary btn-sm" id="add_item"><i class="fa fa-plus"></i></button>
+                                    </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Jumlah Event</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="jumlah_event" class="form-control" required="">
-                                        <option value="">-- Pilih Jumlah Event --</option>
-                                        <option value="1-3">1 - 3</option>
-                                        <option value="4-7">4 - 7</option>
-                                        <option value="8-11">8 - 11</option>
-                                        <option value=">12">> 12</option>
-
-                                </td>
-                            </tr>
+                         
                             <tr>
                                 <th>Media Sosial</th>
                             </tr>
                             <tr>
                                 <td>
-                                    <select name="bobot_medsos" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Media Sosial --</option>
-                                        <option value="2">Instagram, Twitter</option>
-                                        <option value="3">Instagram, Twitter, Facebook</option>
-                                        <option value="4">Instagram, Twitter, Facebook, Youtube</option>
-                                        <option value="5">Instagram, Twitter, Facebook, Youtube, Tiktok</option>
-                                    </select>
+                                    <div id="dynamic_field2">
+                                    <label class="checkbox-inline" for="medsos1">
+                                        <input type="checkbox" id="medsos1" name="nama_medsos[]" value="Instagram"> Instagram
+                                    </label>
+                                    <label class="checkbox-inline" for="medsos2">
+                                        <input type="checkbox" id="medsos2" name="nama_medsos[]" value="Twitter"> Twitter
+                                    </label>
+                                    <label class="checkbox-inline" for="medsos3">
+                                        <input type="checkbox" id="medsos3" name="nama_medsos[]" value="Facebook"> Facebook
+                                    </label>
+                                    <label class="checkbox-inline" for="medsos4">
+                                        <input type="checkbox" id="medsos4" name="nama_medsos[]" value="Youtube"> Youtube
+                                    </label><br>
+                                    <label class="checkbox-inline" for="medsos5">
+                                        <input type="checkbox" id="medsos5" name="nama_medsos[]" value="Tiktok"> Tiktok
+                                    </label>
+                                    <label id="checkbox_items2">
+                                        <!-- Tempat untuk menambahkan elemen checkbox dinamis -->
+                                    </label><br>
+                                     <!-- membuat klik tombol tambah item -->
+                                     <input type="text" id="new_item2" class="form-control" placeholder="tambah item lainnya" autocomplete="off" style="width: 30%; display: inline-block;">
+                                    <button type="button" class="btn btn-primary btn-sm" id="add_item2"><i class="fa fa-plus"></i></button>
+                                    
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Jumlah Media Sosial</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="jumlah_medsos" class="form-control" required="">
-                                        <option value="">-- Pilih Jumlah Media Sosial --</option>
-                                        <option value="1-2">1 - 2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value=">5">> 5</option>
-                                    </select>
-                                </td>
-                            </tr>
+                            
                             <tr>
                                 <th>Website</th>
                             </tr>
@@ -203,7 +189,7 @@ if($aksi == "lihat"):
                                     </select>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
@@ -211,191 +197,82 @@ if($aksi == "lihat"):
                                     <input type="submit" name="kirim" value="Submit" class="btn btn-success">
                                 </td>
                             </tr>
-
                         </form>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Modal -->
-
-    <!-- Modal impor data dari Excel -->
-    <!-- <div class="modal fade" id="modalImportExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-purple">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Impor Data dari Excel</h4>
-                    <a href="<?= site_url('superadmin/judul_skripsi/buatTemplateExcel') ?>" class="btn btn-success">Unduh Template Excel</a>
-
-                </div>
-                <div class="modal-body">
-                    <form id="importExcelForm" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="excelFile">Pilih File Excel:</label>
-                            <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx,.xls">
-                        </div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success" id="importExcelBtn">Impor</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- End Modal -->
-
-    <!-- Modal edit data judul skripsi-->
-    <?php foreach($data as $anggota_kim): ?>
-    <div class="modal fade" id="edit<?= $anggota_kim['id_anggota'] ?>" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-purple">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit <?= $judul ?></h4>
-                </div>
-                <div class="modal-body table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <form id="edit" method="post">
-                            <tr>
-                                <th>ID Anggota KIM</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" name="id_anggota" value="<?= $anggota_kim['id_anggota'] ?>"
-                                        class="form-control" readonly>
-                            </tr>
-                            <tr>
-                                <th>Nama KIM</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" name="nama_kim" value="<?= $anggota_kim['nama_kim'] ?>"
-                                        class="form-control" autocomplete="off" required="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Wilayah</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" name="wilayah" value="<?= $anggota_kim['wilayah'] ?>"
-                                        class="form-control" autocomplete="off" required="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Event</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="bobot_event" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Event --</option>
-                                        <option value="2" <?php if($anggota_kim['bobot_event'] == 2) echo 'selected' ?>>Pelantikan, Monitoring</option>
-                                        <option value="3" <?php if($anggota_kim['bobot_event'] == 3) echo 'selected' ?>>Giat Desa 2x, Pelantikan, Monitoring</option>
-                                        <option value="4" <?php if($anggota_kim['bobot_event'] == 4) echo 'selected' ?>>Giat Desa 3x, Bimtek 2x, Pelantikan, Studi Banding, Monitoring</option>
-                                        <option value="5" <?php if($anggota_kim['bobot_event'] == 5) echo 'selected' ?>>Giat Desa 5x, Bimtek 4x, Pelantikan, Monitoring, Pekan KIM</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Jumlah Event</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="jumlah_event" class="form-control" required="">
-                                        <option value="">-- Pilih Jumlah Event --</option>
-                                        <option value="1-3" <?php if($anggota_kim['jumlah_event'] == '1-3') echo 'selected' ?>>1 - 3</option>
-                                        <option value="4-7" <?php if($anggota_kim['jumlah_event'] == '4-7') echo 'selected' ?>>4 - 7</option>
-                                        <option value="8-11" <?php if($anggota_kim['jumlah_event'] == '8-11') echo 'selected' ?>>8 - 11</option>
-                                        <option value=">12" <?php if($anggota_kim['jumlah_event'] == '>12') echo 'selected' ?>>> 12</option>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Media Sosial</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="bobot_medsos" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Media Sosial --</option>
-                                        <option value="2" <?php if($anggota_kim['bobot_medsos'] == 2) echo 'selected' ?>>Instagram, Twitter</option>
-                                        <option value="3" <?php if($anggota_kim['bobot_medsos'] == 3) echo 'selected' ?>>Instagram, Twitter, Facebook</option>
-                                        <option value="4" <?php if($anggota_kim['bobot_medsos'] == 4) echo 'selected' ?>>Instagram, Twitter, Facebook, Youtube</option>
-                                        <option value="5" <?php if($anggota_kim['bobot_medsos'] == 5) echo 'selected' ?>>Instagram, Twitter, Facebook, Youtube, Tiktok</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Jumlah Media Sosial</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="jumlah_medsos" class="form-control" required="">
-                                        <option value="">-- Pilih Jumlah Media Sosial --</option>
-                                        <option value="1-2" <?php if($anggota_kim['jumlah_medsos'] == '1-2') echo 'selected' ?>>1 - 2</option>
-                                        <option value="3" <?php if($anggota_kim['jumlah_medsos'] == 3) echo 'selected' ?>>3</option>
-                                        <option value="4" <?php if($anggota_kim['jumlah_medsos'] == 4) echo 'selected' ?>>4</option>
-                                        <option value=">5" <?php if($anggota_kim['jumlah_medsos'] == '>5') echo 'selected' ?>>> 5</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Website</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="bobot_website" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Website --</option>
-                                        <option value="2" <?php if($anggota_kim['bobot_website'] == 2) echo 'selected' ?>>Memiliki Website</option>
-                                        <option value="3" <?php if($anggota_kim['bobot_website'] == 3) echo 'selected' ?>>Memiliki Website, Tampilan Menarik, Fitur Lengkap</option>
-                                        <option value="4" <?php if($anggota_kim['bobot_website'] == 4) echo 'selected' ?>>Memiliki Website, Tampilan Sangat Menarik, Fitur Sangat Lengkap, Aktif Update Berita</option>
-                                        <option value="5" <?php if($anggota_kim['bobot_website'] == 5) echo 'selected' ?>>Memiliki Website, Tampilan Sangat Menarik, Fitur Sangat Lengkap, Aktif Update Berita, Advertising</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Sanksi</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="bobot_sanksi" class="form-control" required="">
-                                        <option value="">-- Pilih Kriteria Sanksi --</option>
-                                        <option value="4" <?php if($anggota_kim['bobot_sanksi'] == 4) echo 'selected' ?>>1 - 3</option>
-                                        <option value="3" <?php if($anggota_kim['bobot_sanksi'] == 3) echo 'selected' ?>>4 - 6</option>
-                                        <option value="2" <?php if($anggota_kim['bobot_sanksi'] == 2) echo 'selected' ?>>7 - 10</option>
-                                        <option value="1" <?php if($anggota_kim['bobot_sanksi'] == 1) echo 'selected' ?>>> 11</option>
-                                    </select>
-                                </td>
-                            </tr>
-                                                        
-                            <tr>
-                                <td>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
-                                    &nbsp;&nbsp;
-                                    <input type="submit" name="kirim" value="Simpan" class="btn btn-success">
-                                    &nbsp;&nbsp;
-                                    <a href="javascript:void(0)"
-                                        onclick="hapus_anggotakim('<?= $anggota_kim['id_anggota'] ?>')"
-                                        class="btn btn-danger">Hapus</a>
-                                </td>
-                            </tr>
-
-                        </form>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
     <!-- End Modal -->
 
     <script>
-        //add data
-        $(document).ready(function() {
-        $('#add').submit(function(e) {
+        //add data nama event dinamis
+        $(document).ready(function () {
+        var i = 6;
+        var j = 5;
+
+        // Add data nama event dinamis
+        $('#add_item').click(function () {
+            var newItemName = $('#new_item').val().trim();
+
+            if (newItemName !== "") {
+                i++;
+                $('#checkbox_items').append('<label class="checkbox-inline" for="event' + i + '"><input type="checkbox" id="event' + i + '" name="nama_event[]" value="' + newItemName + '">' + newItemName + '</label>');
+                $('#new_item').val("");
+            } else {
+                swal({
+                    title: "Gagal",
+                    text: "Nama item tidak boleh kosong",
+                    type: "error",
+                    showConfirmButton: true,
+                    confirmButtonText: "OK",
+                });
+            }
+        });
+
+        // Add data nama medsos dinamis
+        $('#add_item2').click(function () {
+            var newItemName = $('#new_item2').val().trim();
+
+            if (newItemName !== "") {
+                j++;
+                $('#checkbox_items2').append('<label class="checkbox-inline" for="medsos' + j + '"><input type="checkbox" id="medsos' + j + '" name="nama_medsos[]" value="' + newItemName + '">' + newItemName + '</label>');
+                $('#new_item2').val("");
+            } else {
+                swal({
+                    title: "Gagal",
+                    text: "Nama item tidak boleh kosong",
+                    type: "error",
+                    showConfirmButton: true,
+                    confirmButtonText: "OK",
+                });
+            }
+        });
+
+
+        $('#add').submit(function (e) {
             e.preventDefault();
+
+            // Dapatkan semua nilai checkbox yang dicentang
+            var selectedItems = $('input[name="nama_event[]"]:checked').map(function () {
+                return this.value;
+            }).get();
+            var selectedItems2 = $('input[name="nama_medsos[]"]:checked').map(function () {
+                return this.value;
+            }).get();
+
+            // Hapus semua nilai sebelum menambahkan yang baru
+            $('input[name="nama_event[]"]').remove();
+            $('input[name="nama_medsos[]"]').remove();
+
+            // Tambahkan nilai checkbox ke FormData
+            selectedItems.forEach(function (item) {
+                $('#add').append('<input type="checkbox" name="nama_event[]" value="' + item + '" checked style="display:none">');
+            });
+            selectedItems2.forEach(function (item) {
+                $('#add').append('<input type="checkbox" name="nama_medsos[]" value="' + item + '" checked style="display:none">');
+            });
+
             $.ajax({
                 url: "<?= site_url('superadmin/anggota_kim/api_add') ?>",
                 type: "POST",
@@ -403,86 +280,44 @@ if($aksi == "lihat"):
                 processData: false,
                 contentType: false,
                 cache: false,
-                async: false,
-                success: function(data) {
-                    if (data.status) {
-                        $('#modalTambahDataKIM');
-                        $('#add')[0].reset();
+                success: function (data) {
+                        if (data.status) {
+                            $('#modalTambahDataKIM');
+                            $('#add')[0].reset();
+                            swal({
+                                title: "Berhasil",
+                                text: "Data berhasil ditambahkan",
+                                type: "success",
+                                showConfirmButton: true,
+                                confirmButtonText: "OKEE",
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            // Hapus tag HTML dari pesan error
+                            var errorMessage = $('<div>').html(data.message).text();
+                            swal({
+                                title: "Gagal",
+                                text: errorMessage, // Menampilkan pesan error dari server
+                                type: "error",
+                                showConfirmButton: true,
+                                confirmButtonText: "OK",
+                            });
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Menampilkan pesan error jika terjadi kesalahan pada AJAX request
                         swal({
-                            title: "Berhasil",
-                            text: "Data berhasil ditambahkan",
-                            type: "success",
-                            showConfirmButton: true,
-                            confirmButtonText: "OKEE",
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else {
-                        // Hapus tag HTML dari pesan error
-                        var errorMessage = $('<div>').html(data.message).text();
-                        swal({
-                            title: "Gagal",
-                            text: errorMessage, // Menampilkan pesan error dari server
+                            title: "Error",
+                            text: "Terjadi kesalahan saat mengirim data",
                             type: "error",
                             showConfirmButton: true,
                             confirmButtonText: "OK",
                         });
                     }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Menampilkan pesan error jika terjadi kesalahan pada AJAX request
-                    swal({
-                        title: "Error",
-                        text: "Terjadi kesalahan saat mengirim data",
-                        type: "error",
-                        showConfirmButton: true,
-                        confirmButtonText: "OK",
-                    });
-                }
+                });
             });
         });
-    });
-
-
-    //edit
-    $(document).on('submit', '#edit', function(e) {
-        e.preventDefault();
-        var form_data = new FormData(this);
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('superadmin/anggota_kim/api_edit/') ?>" + form_data.get('id_anggota'),
-            dataType: "json",
-            data: form_data,
-            processData: false,
-            contentType: false,
-            //memanggil swall ketika berhasil
-            success: function(data) {
-                $('#edit' + form_data.get('id_anggota'));
-                swal({
-                    title: "Berhasil",
-                    text: "Data Berhasil Diubah",
-                    type: "success",
-                    showConfirmButton: true,
-                    confirmButtonText: "OKEE",
-                }).then(function() {
-                    location.reload();
-                });
-            },
-            //memanggil swall ketika gagal
-            error: function(data) {
-                swal({
-                    title: "Gagal",
-                    text: "Data Gagal Diubah",
-                    type: "error",
-                    showConfirmButton: true,
-                    confirmButtonText: "OKEE",
-                }).then(function() {
-                    location.reload();
-                });
-            }
-        });
-    });
 
     //ajax hapus
     function hapus_anggotakim(id_anggota) {

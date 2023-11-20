@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class Nilai extends CI_controller
+class Nilai_kim extends CI_controller
 {
 	function __construct()
 	{

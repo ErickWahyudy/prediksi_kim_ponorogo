@@ -44,36 +44,19 @@ class Nilai_perbandingan extends CI_controller
               $data_kim['bobot_sanksi']
           ];
 
-           // Membuat matriks perbandingan dari nilai yang dimasukkan
-           $matriksPerbandingan = [];
-           $a = $datavalues[0];
-           $b = $datavalues[1];
-           $c = $datavalues[2];
-           $d = $datavalues[3];
+           // Ganti nilai a, b, c, dan d dengan nilai dari database yang sesuai
+            $a = $data_kim['bobot_event'];
+            $b = $data_kim['bobot_medsos'];
+            $c = $data_kim['bobot_website'];
+            $d = $data_kim['bobot_sanksi'];
 
-           //row 1
-           $matriksPerbandingan[0][0] = $a;
-           $matriksPerbandingan[0][1] = $b;
-           $matriksPerbandingan[0][2] = $c;
-           $matriksPerbandingan[0][3] = $d;
-
-           //row 2
-           $matriksPerbandingan[1][0] = 1 / $b;
-           $matriksPerbandingan[1][1] = $a;
-           $matriksPerbandingan[1][2] = $b;
-           $matriksPerbandingan[1][3] = $c;
-
-           //row 3
-           $matriksPerbandingan[2][0] = 1 / $c;
-           $matriksPerbandingan[2][1] = 1 / $b;
-           $matriksPerbandingan[2][2] = $a;
-           $matriksPerbandingan[2][3] = $b;
-
-           //row 4
-           $matriksPerbandingan[3][0] = 1 / $d;
-           $matriksPerbandingan[3][1] = 1 / $c;
-           $matriksPerbandingan[3][2] = 1 / $b;
-           $matriksPerbandingan[3][3] = $a;
+            // Membuat matriks perbandingan dari nilai yang dimasukkan
+            $matriksPerbandingan = [
+                [1, $a, 1 / $c, $b],
+                [1 / $a, 1, 1 / $d, $c],
+                [$c, $d, 1, $a],
+                [1 / $b, 1 / $c, 1 / $a, 1]
+            ];
         
  
      // Menghitung jumlah setiap kolom
@@ -131,11 +114,11 @@ class Nilai_perbandingan extends CI_controller
            $c = $datavalues[2];
            $d = $datavalues[3];
            
-           $matriksPerbandingan = [
-            [$a, $b, $c, $d],
-            [1 / $b, $a, $b, $c],
-            [1 / $c, 1 / $b, $a, $b],
-            [1 / $d, 1 / $c, 1 / $b, $a]
+          $matriksPerbandingan = [
+            [1, $a, 1 / $c, $b],
+            [1 / $a, 1, 1 / $d, $c],
+            [$c, $d, 1, $a],
+            [1 / $b, 1 / $c, 1 / $a, 1]
         ];
            
  
