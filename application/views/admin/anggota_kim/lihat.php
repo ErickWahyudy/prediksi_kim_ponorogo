@@ -274,7 +274,7 @@ if($aksi == "lihat"):
             });
 
             $.ajax({
-                url: "<?= site_url('superadmin/anggota_kim/api_add') ?>",
+                url: "<?= site_url('admin/anggota_kim/api_add') ?>",
                 type: "POST",
                 data: new FormData(this),
                 processData: false,
@@ -335,7 +335,7 @@ if($aksi == "lihat"):
             if (result.value) { // Only delete the data if the user clicked on the confirm button
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('superadmin/anggota_kim/api_hapus/') ?>" + id_anggota,
+                    url: "<?php echo site_url('admin/anggota_kim/api_hapus/') ?>" + id_anggota,
                     dataType: "json",
                 }).done(function() {
                     swal({

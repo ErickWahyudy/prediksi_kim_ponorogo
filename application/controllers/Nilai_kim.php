@@ -46,7 +46,7 @@ class Nilai_kim extends CI_controller
         
             // Ambil data dari database
             $data['data_kim'] = $this->M_perhitungan_AHP->view()->result_array();
-        
+
             // Array untuk menyimpan semua hasil perhitungan
             $all_calculations = array();
         
@@ -65,10 +65,10 @@ class Nilai_kim extends CI_controller
         
                 // Membuat matriks perbandingan dari nilai yang dimasukkan
                 $matriksPerbandingan = [
-                    [$a, $b, $c, $d],
-                    [1 / $b, $a, $b, $c],
-                    [1 / $c, 1 / $b, $a, $b],
-                    [1 / $d, 1 / $c, 1 / $b, $a]
+                    [1, $a, 1 / $c, $b],
+                    [1 / $a, 1, 1 / $d, $c],
+                    [$c, $d, 1, $a],
+                    [1 / $b, 1 / $c, 1 / $a, 1]
                 ];
         
                 // Menghitung jumlah setiap kolom
@@ -93,21 +93,28 @@ class Nilai_kim extends CI_controller
                     $nilaiEigen[] = $kriteriaEigen;
                 }
         
+                //Rata rata nilai eigen
+                $rataRataEigen = array();
+                foreach ($nilaiEigen as $row) {
+                    $rataRataEigen[] = array_sum($row) / count($row);
+                }
+        
                 // Simpan hasil perhitungan untuk baris data saat ini ke dalam $all_calculations
                 $calculations = [
                     'nama_kim' => $nama_kim,
                     'matriksPerbandingan' => $matriksPerbandingan,
                     'jumlahKolom' => $jumlahKolom,
                     'nilaiEigen' => $nilaiEigen,
+                    'rataRataEigen' => $rataRataEigen,
+                    'rataRataEigen_sorted' => $rataRataEigen,
                     'criteria'	=> $data['criteria']
                 ];
         
                 $all_calculations[] = $calculations;
             }
-        
+
             // Tampilkan hasil perhitungan dalam tampilan
             $data['all_calculations'] = $all_calculations;
-
         $this->load->view('template/nilai_kim', $data);
     }
 

@@ -15,24 +15,12 @@ class Pengguna extends CI_controller
       $this->load->library('form_validation');
       
 	 // error_reporting(0);
-	 if($this->session->userdata('superadmin') != TRUE){
+	 if($this->session->userdata('admin') != TRUE){
      redirect(base_url(''));
      exit;
 	};
    $this->load->model('m_pengguna');
 	}
-
-    //Superadmin
-    public function user_superadmin($value='')
-    {
-     $view = array('judul'      =>'Data Superadmin',
-                    'aksi'      =>'superadmin',
-                    'level'     =>$this->db->get('tb_level')->result_array(),
-                    'data'      =>$this->m_pengguna->viewSuperadmin()->result_array(),
-                  );
-
-      $this->load->view('superadmin/pengguna/superadmin',$view);
-    }
 
     //Admin
     public function admin($value='')
@@ -43,8 +31,9 @@ class Pengguna extends CI_controller
                     'data'      =>$this->m_pengguna->viewAdmin()->result_array(),
                   );
 
-      $this->load->view('superadmin/pengguna/admin',$view);
+      $this->load->view('admin/pengguna/admin',$view);
     }
+
 
     private function acak_id($panjang)
     {
