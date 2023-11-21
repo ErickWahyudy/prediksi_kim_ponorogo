@@ -115,10 +115,6 @@
       </div> -->
       <!-- /.social-auth-links -->
 
-      <br>
-      <p class="mb-0">
-        <a href="<?= base_url('kim/nilai') ?>" class="text-center">Lihat Nilai KIM...</a>
-      </p>
     </div>
         <center>
 					<strong>Copyright &copy; <?php echo date('Y'); ?>
