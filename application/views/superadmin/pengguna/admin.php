@@ -13,7 +13,7 @@ if($aksi == "admin"):
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Keterangan</th>
+                <th>Bidang</th>
                 <th>Email</th>
                 <th>Level</th>
                 <th>Aksi</th>
@@ -72,7 +72,7 @@ if($aksi == "admin"):
                             </tr>
                             
                             <tr>
-                                <th> Keterangan</th>
+                                <th> Bidang</th>
                             </tr>
                             <tr>
                                 <td>
@@ -163,7 +163,7 @@ if($aksi == "admin"):
                             </tr>
                            
                             <tr>
-                                <th> Keterangan</th>
+                                <th> Bidang</th>
                             </tr>
                             <tr>
                                 <td>

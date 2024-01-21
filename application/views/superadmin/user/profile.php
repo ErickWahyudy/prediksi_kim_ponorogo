@@ -15,7 +15,7 @@ if($aksi == "lihat"):
         </tr>
       
         <tr>
-            <th>Keterangan</th>
+            <th>Bidang</th>
             <td>
                 : <?= $keterangan ?>
             </td>
@@ -70,7 +70,7 @@ if($aksi == "lihat"):
                         </tr>
                        
                         <tr>
-                            <th>Keterangan</th>
+                            <th>Bidang</th>
                         </tr>
                         <tr>
                             <td>

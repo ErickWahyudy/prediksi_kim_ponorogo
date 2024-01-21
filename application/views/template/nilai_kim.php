@@ -82,7 +82,7 @@
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
-                <?php
+                    <?php
     foreach ($all_calculations as $index => $calculation) {
         foreach ($calculation['rataRataEigen_sorted'] as $index => $value) {
             $all_calculations[$index]['rataRataEigen_sorted'] = $value;
@@ -115,55 +115,29 @@
     $all_calculations = $sorted_calculations;
     ?>
 
-    <h1><?php echo $judul; ?></h1>
+                    <h1><?php echo $judul; ?></h1>
 
-    <div class="table-responsive">
-    <table id="example1" class="table table-bordered  table-striped">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama KIM</th>
-            <th>Total Nilai</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php $no=1; foreach ($all_calculations as $index => $calculation): 
-            ?>
-            <tr>
-            <td class="col-md-1"><?= $no ?></td>
-            <td><?php echo $calculation['nama_kim']; ?></td>
-                <!-- Total Nilai berdasarkan rata-rata -->
-                <td>
-                    <table class="">
-                        <tr>                        
-                            <?php
-                             foreach ($calculation['nilaiEigen'] as $index => $value) {
-                                $calculation['nilaiEigen'][$index] = $value;
-                            }
-                                //total nilai berdasarkan rata-rata = (rata-rata K1 x rata-rata K1 KIM1+(rata-rata K2 x rata-rata K2 KIM1)+(rata-rata K3 x rata-rata K3 KIM1)+(rata-rata K4 x ratarata K4 KIM1)
-                                $totalNilai = 0;
-                                for ($i = 0; $i < count($criteria); $i++) {
-                                    if (isset($calculation['nilaiEigen'][$i][$index])) {
-                                        $totalNilai += (array_sum($calculation['nilaiEigen'][$i]) / count($criteria)) * $calculation['nilaiEigen'][$i][$index];
-                                    }
-                                }
-                            ?>
-
-                            
-                                <td><?php echo number_format($totalNilai, 5); ?></td>
-                            
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        <?php $no++; endforeach; ?>
-        </tbody>
-    </table>    
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered  table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Peringkat</th>
+                                    <th>Nama KIM</th>
+                                    <th>Wilayah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no=1; foreach ($all_calculations as $index => $calculation): ?>
+                                <tr>
+                                    <td class="col-md-1"><?= $no ?></td>
+                                    <td><?php echo $calculation['nama_kim']; ?></td>
+                                    <td><?php echo $calculation['wilayah']; ?></td>
+                                </tr>
+                                <?php $no++; endforeach; ?>
+                            </tbody>
+                        </table>
 
 
-                    <!-- tombol keluar -->
-                    <a href="<?= base_url('login') ?>" class="btn btn-warning btn-sm">Keluar</a>
-                    <footer>
                         <center>
                             <strong>Copyright &copy; <?php echo date('Y'); ?>
                                 <?php  $nama_judul = $this->db->get('tb_pengaturan')->row_array(); ?>
@@ -173,84 +147,84 @@
                             <br><i>Access application with <?php echo "". get_client_browser()."";?>.
                                 <?php echo "". get_client_ip()."";?></i>
                         </center>
-                    </footer>
+                        </footer>
 
-                    <!-- Add the sidebar's background. This div must be placed
+                        <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 
-                </div>
-                <!-- ./wrapper -->
+                    </div>
+                    <!-- ./wrapper -->
 
-                <!-- jQuery 3 -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/jquery/dist/jquery.min.js">
-                </script>
-                <!-- jQuery UI 1.11.4 -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/jquery-ui/jquery-ui.min.js">
-                </script>
-                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-                <script>
-                $.widget.bridge('uibutton', $.ui.button);
-                </script>
-                <!-- Bootstrap 3.3.7 -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/bootstrap/dist/js/bootstrap.min.js">
-                </script>
+                    <!-- jQuery 3 -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/jquery/dist/jquery.min.js">
+                    </script>
+                    <!-- jQuery UI 1.11.4 -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/jquery-ui/jquery-ui.min.js">
+                    </script>
+                    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                    <script>
+                    $.widget.bridge('uibutton', $.ui.button);
+                    </script>
+                    <!-- Bootstrap 3.3.7 -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/bootstrap/dist/js/bootstrap.min.js">
+                    </script>
 
-                <script
-                    src="<?= base_url('themes/admin') ?>/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js">
-                </script>
-                <!-- jvectormap -->
-                <script src="<?= base_url('themes/admin') ?>/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js">
-                </script>
-                <script src="<?= base_url('themes/admin') ?>/plugins/jvectormap/jquery-jvectormap-world-mill-en.js">
-                </script>
-                <!-- jQuery Knob Chart -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/jquery-knob/dist/jquery.knob.min.js">
-                </script>
-                <!-- daterangepicker -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/moment/min/moment.min.js">
-                </script>
-                <!-- <script src="<?= base_url('themes/admin') ?>/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script> -->
-                <!-- datepicker -->
-                <script
-                    src="<?= base_url('themes/admin') ?>/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
-                </script>
-                <script
-                    src="<?= base_url('themes/admin') ?>/bower_components/datatables.net/js/jquery.dataTables.min.js">
-                </script>
-                <script src="<?= base_url('themes/admin') ?>/bower_components/chart.js/Chart.js">
-                </script>
+                    <script
+                        src="<?= base_url('themes/admin') ?>/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js">
+                    </script>
+                    <!-- jvectormap -->
+                    <script src="<?= base_url('themes/admin') ?>/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js">
+                    </script>
+                    <script src="<?= base_url('themes/admin') ?>/plugins/jvectormap/jquery-jvectormap-world-mill-en.js">
+                    </script>
+                    <!-- jQuery Knob Chart -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/jquery-knob/dist/jquery.knob.min.js">
+                    </script>
+                    <!-- daterangepicker -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/moment/min/moment.min.js">
+                    </script>
+                    <!-- <script src="<?= base_url('themes/admin') ?>/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script> -->
+                    <!-- datepicker -->
+                    <script
+                        src="<?= base_url('themes/admin') ?>/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js">
+                    </script>
+                    <script
+                        src="<?= base_url('themes/admin') ?>/bower_components/datatables.net/js/jquery.dataTables.min.js">
+                    </script>
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/chart.js/Chart.js">
+                    </script>
 
-                <script>
-                $(function() {
-                    $('#example1').DataTable()
-                    $('#example2').DataTable({
-                        'paging': true,
-                        'lengthChange': false,
-                        'searching': false,
-                        'ordering': true,
-                        'info': true,
-                        'autoWidth': false
+                    <script>
+                    $(function() {
+                        $('#example1').DataTable()
+                        $('#example2').DataTable({
+                            'paging': true,
+                            'lengthChange': false,
+                            'searching': false,
+                            'ordering': true,
+                            'info': true,
+                            'autoWidth': false
+                        })
                     })
-                })
 
-                //   $(function () {
-                //     $("#example1").DataTable({
-                //       "responsive": true, "lengthChange": false, "autoWidth": false,
-                //       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                //     $('#example2').DataTable({
-                //       "paging": true,
-                //       "lengthChange": false,
-                //       "searching": false,
-                //       "ordering": true,
-                //       "info": true,
-                //       "autoWidth": false,
-                //       "responsive": true,
-                //     });
-                //   });
-                </script>
+                    //   $(function () {
+                    //     $("#example1").DataTable({
+                    //       "responsive": true, "lengthChange": false, "autoWidth": false,
+                    //       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    //     $('#example2').DataTable({
+                    //       "paging": true,
+                    //       "lengthChange": false,
+                    //       "searching": false,
+                    //       "ordering": true,
+                    //       "info": true,
+                    //       "autoWidth": false,
+                    //       "responsive": true,
+                    //     });
+                    //   });
+                    </script>
 
-                <?php
+                    <?php
  //menampilkan ip address menggunakan function getenv()
  function get_client_ip() {
     $ipaddress = '';
@@ -294,25 +268,25 @@ function get_client_browser() {
 ?>
 
 
-                <script
-                    src="<?= base_url('themes/admin') ?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js">
-                </script>
-                <script
-                    src="<?= base_url('themes/admin') ?>/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js">
-                </script>
-                <!-- Slimscroll -->
-                <script
-                    src="<?= base_url('themes/admin') ?>/bower_components/jquery-slimscroll/jquery.slimscroll.min.js">
-                </script>
-                <!-- FastClick -->
-                <script src="<?= base_url('themes/admin') ?>/bower_components/fastclick/lib/fastclick.js">
-                </script>
-                <!-- AdminLTE App -->
-                <script src="<?= base_url('themes/admin') ?>/dist/js/adminlte.min.js"></script>
-                <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-                <!-- <script src="<?= base_url('themes/admin') ?>/dist/js/pages/dashboard.js"></script> -->
-                <!-- AdminLTE for demo purposes -->
-                <script src="<?= base_url('themes/admin') ?>/dist/js/demo.js"></script>
+                    <script
+                        src="<?= base_url('themes/admin') ?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js">
+                    </script>
+                    <script
+                        src="<?= base_url('themes/admin') ?>/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js">
+                    </script>
+                    <!-- Slimscroll -->
+                    <script
+                        src="<?= base_url('themes/admin') ?>/bower_components/jquery-slimscroll/jquery.slimscroll.min.js">
+                    </script>
+                    <!-- FastClick -->
+                    <script src="<?= base_url('themes/admin') ?>/bower_components/fastclick/lib/fastclick.js">
+                    </script>
+                    <!-- AdminLTE App -->
+                    <script src="<?= base_url('themes/admin') ?>/dist/js/adminlte.min.js"></script>
+                    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+                    <!-- <script src="<?= base_url('themes/admin') ?>/dist/js/pages/dashboard.js"></script> -->
+                    <!-- AdminLTE for demo purposes -->
+                    <script src="<?= base_url('themes/admin') ?>/dist/js/demo.js"></script>
 </body>
 
 </html>

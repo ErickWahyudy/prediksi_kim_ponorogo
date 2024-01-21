@@ -55,6 +55,7 @@ class Home extends CI_controller
 
         // Dapatkan 'nama_kim' dari hasil query
         $nama_kim = $data_kim['nama_kim'];
+        $wilayah = $data_kim['wilayah'];
 
         // Ganti nilai a, b, c, dan d dengan nilai dari database yang sesuai
         $a = $data_kim['bobot_event'];
@@ -101,6 +102,7 @@ class Home extends CI_controller
         // Simpan hasil perhitungan untuk baris data saat ini ke dalam $all_calculations
         $calculations = [
             'nama_kim' => $nama_kim,
+            'wilayah' => $wilayah,
             'matriksPerbandingan' => $matriksPerbandingan,
             'jumlahKolom' => $jumlahKolom,
             'nilaiEigen' => $nilaiEigen,

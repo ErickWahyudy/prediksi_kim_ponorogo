@@ -40,9 +40,9 @@
     <table id="example1" class="table table-bordered  table-striped">
         <thead>
         <tr>
-            <th>No</th>
+            <th>Peringkat</th>
             <th>Nama KIM</th>
-            <th>Total Nilai</th>
+            <th>Wilayah</th>
         </tr>
         </thead>
         <tbody>
@@ -51,29 +51,7 @@
             <tr>
             <td class="col-md-1"><?= $no ?></td>
             <td><?php echo $calculation['nama_kim']; ?></td>
-                <!-- Total Nilai berdasarkan rata-rata -->
-                <td>
-                    <table class="">
-                        <tr>                        
-                            <?php
-                             foreach ($calculation['nilaiEigen'] as $index => $value) {
-                                $calculation['nilaiEigen'][$index] = $value;
-                            }
-                                //total nilai berdasarkan rata-rata = (rata-rata K1 x rata-rata K1 KIM1+(rata-rata K2 x rata-rata K2 KIM1)+(rata-rata K3 x rata-rata K3 KIM1)+(rata-rata K4 x ratarata K4 KIM1)
-                                $totalNilai = 0;
-                                for ($i = 0; $i < count($criteria); $i++) {
-                                    if (isset($calculation['nilaiEigen'][$i][$index])) {
-                                        $totalNilai += (array_sum($calculation['nilaiEigen'][$i]) / count($criteria)) * $calculation['nilaiEigen'][$i][$index];
-                                    }
-                                }
-                            ?>
-
-                            
-                                <td><?php echo number_format($totalNilai, 5); ?></td>
-                            
-                        </tr>
-                    </table>
-                </td>
+            <td><?php echo $calculation['wilayah']; ?></td>
             </tr>
         <?php $no++; endforeach; ?>
         </tbody>
@@ -121,9 +99,9 @@
     <table id="example1" class="table table-bordered  table-striped">
         <thead>
         <tr>
-            <th>No</th>
+            <th>Peringkat</th>
             <th>Nama KIM</th>
-            <th>Total Nilai</th>
+            <th>Wilayah</th>
         </tr>
         </thead>
         <tbody>
@@ -132,29 +110,7 @@
             <tr>
             <td class="col-md-1"><?= $no ?></td>
             <td><?php echo $calculation['nama_kim']; ?></td>
-                <!-- Total Nilai berdasarkan rata-rata -->
-                <td>
-                    <table class="">
-                        <tr>                        
-                            <?php
-                             foreach ($calculation['nilaiEigen'] as $index => $value) {
-                                $calculation['nilaiEigen'][$index] = $value;
-                            }
-                                //total nilai berdasarkan rata-rata = (rata-rata K1 x rata-rata K1 KIM1+(rata-rata K2 x rata-rata K2 KIM1)+(rata-rata K3 x rata-rata K3 KIM1)+(rata-rata K4 x ratarata K4 KIM1)
-                                $totalNilai = 0;
-                                for ($i = 0; $i < count($criteria); $i++) {
-                                    if (isset($calculation['nilaiEigen'][$i][$index])) {
-                                        $totalNilai += (array_sum($calculation['nilaiEigen'][$i]) / count($criteria)) * $calculation['nilaiEigen'][$i][$index];
-                                    }
-                                }
-                            ?>
-
-                            
-                                <td><?php echo number_format($totalNilai, 5); ?></td>
-                            
-                        </tr>
-                    </table>
-                </td>
+            <td><?php echo $calculation['wilayah']; ?></td>
             </tr>
         <?php $no++; endforeach; ?>
         </tbody>

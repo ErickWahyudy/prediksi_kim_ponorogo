@@ -14,7 +14,7 @@ if($aksi == "superadmin"):
                 <th>No</th>
                 <th>Nama</th>
                 <th>NIDN</th>
-                <th>Keterangan</th>
+                <th>Bidang</th>
                 <th>Email</th>
                 <th>Level</th>
                 <th>Aksi</th>
@@ -79,7 +79,7 @@ if($aksi == "superadmin"):
                                 </td>
                             </tr>
                             <tr>
-                                <th> Keterangan</th>
+                                <th> Bidang</th>
                             </tr>
                             <tr>
                                 <td>
@@ -177,7 +177,7 @@ if($aksi == "superadmin"):
                                 </td>
                             </tr>                            
                             <tr>
-                                <th> Keterangan</th>
+                                <th> Bidang</th>
                             </tr>
                             <tr>
                                 <td>
